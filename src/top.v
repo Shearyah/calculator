@@ -20,9 +20,7 @@ wire [15:0] btn_raw;   //16位按键独热码
 wire [3:0] key_val;    //二进制编码
 wire key_pressed;      //稳定按下标记
 reg [11:0] bcd_accumulated; // BCD累加值 
-reg bcd_input_active;      // BCD激活状态
-
-
+reg bcd_input_active;      // BCD激活状
 
 reg [7:0] reg_a, reg_b;//8位操作数ab
 reg [1:0] op_code;     //2位运算操作码

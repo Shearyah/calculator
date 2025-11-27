@@ -1,6 +1,9 @@
+// 蜂鸣器驱动
+// TODO: 将 key_status 与频率的映射与频率驱动蜂鸣器分离为两个模块
+
 module buzzer_driver(
     input clk,
-    input [15:0] key_status, // New: 16位按键状态，用于判断持续时间
+    input [15:0] key_status, // New: 16位按键状态，用于确定发声频率
     output reg beep
 );
     reg [31:0] period;

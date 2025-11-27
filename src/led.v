@@ -1,6 +1,8 @@
+// LED驱动模块
+// TODO: 去除 current_state 输入，直接用 data_saved 判定是否点亮LED
 module led_driver(
     input clk,
-    input rst_n,
+    input rst_n, //复位信号，低有效
     input [2:0] current_state,  //获取主状态
     input [7:0] data_saved,    
     output reg [7:0] led       

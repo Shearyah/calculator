@@ -1,0 +1,106 @@
+standard
+***Report Model: top Device: EG4S20BG256***
+
+IO Statistics
+#IO                        39
+  #input                   14
+  #output                  25
+  #inout                    0
+
+Utilization Statistics
+#lut                      898   out of  19600    4.58%
+#reg                      205   out of  19600    1.05%
+#le                       944
+  #lut only               739   out of    944   78.28%
+  #reg only                46   out of    944    4.87%
+  #lut&reg                159   out of    944   16.84%
+#dsp                        2   out of     29    6.90%
+#bram                       0   out of     64    0.00%
+  #bram9k                   0
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#pad                       39   out of    188   20.74%
+  #ireg                     4
+  #oreg                    13
+  #treg                     0
+#pll                        0   out of      4    0.00%
+#gclk                       1   out of     16    6.25%
+
+Clock Resource Statistics
+Index     ClockNet            Type               DriverType         Driver                        Fanout
+#1        clk_dup_1           GCLK               io                 clk_syn_2.di                  101
+#2        u_key_driver/clk    GCLK               lslice             u_div/btnclk_reg_syn_41.q1    34
+
+
+Detailed IO Report
+
+   Name     Direction    Location    IOStandard    DriveStrength    PullType    PackReg  
+   clk        INPUT         R7        LVCMOS25          N/A          PULLUP      NONE    
+  col[3]      INPUT        F10        LVCMOS25          N/A          PULLUP      IREG    
+  col[2]      INPUT        C11        LVCMOS25          N/A          PULLUP      IREG    
+  col[1]      INPUT        D11        LVCMOS25          N/A          PULLUP      IREG    
+  col[0]      INPUT        E11        LVCMOS25          N/A          PULLUP      IREG    
+  rst_n       INPUT         E3        LVCMOS25          N/A          PULLUP      NONE    
+  sw[7]       INPUT        A14        LVCMOS25          N/A          PULLUP      NONE    
+  sw[6]       INPUT        A13        LVCMOS25          N/A          PULLUP      NONE    
+  sw[5]       INPUT        B12        LVCMOS25          N/A          PULLUP      NONE    
+  sw[4]       INPUT        A12        LVCMOS25          N/A          PULLUP      NONE    
+  sw[3]       INPUT        A11        LVCMOS25          N/A          PULLUP      NONE    
+  sw[2]       INPUT        B10        LVCMOS25          N/A          PULLUP      NONE    
+  sw[1]       INPUT        A10        LVCMOS25          N/A          PULLUP      NONE    
+  sw[0]       INPUT         A9        LVCMOS25          N/A          PULLUP      NONE    
+  an[3]      OUTPUT         A3        LVCMOS25           8            NONE       NONE    
+  an[2]      OUTPUT         A5        LVCMOS25           8            NONE       NONE    
+  an[1]      OUTPUT         B6        LVCMOS25           8            NONE       NONE    
+  an[0]      OUTPUT         C9        LVCMOS25           8            NONE       NONE    
+   beep      OUTPUT        H11        LVCMOS25           8            NONE       OREG    
+  led[7]     OUTPUT        F16        LVCMOS25           8            NONE       OREG    
+  led[6]     OUTPUT        E16        LVCMOS25           8            NONE       OREG    
+  led[5]     OUTPUT        E13        LVCMOS25           8            NONE       OREG    
+  led[4]     OUTPUT        C16        LVCMOS25           8            NONE       OREG    
+  led[3]     OUTPUT        C15        LVCMOS25           8            NONE       OREG    
+  led[2]     OUTPUT        B16        LVCMOS25           8            NONE       OREG    
+  led[1]     OUTPUT        B15        LVCMOS25           8            NONE       OREG    
+  led[0]     OUTPUT        B14        LVCMOS25           8            NONE       OREG    
+  row[3]     OUTPUT         D9        LVCMOS25           8            NONE       OREG    
+  row[2]     OUTPUT         F9        LVCMOS25           8            NONE       OREG    
+  row[1]     OUTPUT        C10        LVCMOS25           8            NONE       OREG    
+  row[0]     OUTPUT        E10        LVCMOS25           8            NONE       OREG    
+  seg[7]     OUTPUT         C8        LVCMOS25           8            NONE       NONE    
+  seg[6]     OUTPUT         A8        LVCMOS25           8            NONE       NONE    
+  seg[5]     OUTPUT         B5        LVCMOS25           8            NONE       NONE    
+  seg[4]     OUTPUT         A7        LVCMOS25           8            NONE       NONE    
+  seg[3]     OUTPUT         E8        LVCMOS25           8            NONE       NONE    
+  seg[2]     OUTPUT         B8        LVCMOS25           8            NONE       NONE    
+  seg[1]     OUTPUT         A6        LVCMOS25           8            NONE       NONE    
+  seg[0]     OUTPUT         A4        LVCMOS25           8            NONE       NONE    
+
+Report Hierarchy Area:
++---------------------------------------------------------------------------------------+
+|Instance         |Module          |le     |lut     |ripple  |seq     |bram    |dsp     |
++---------------------------------------------------------------------------------------+
+|top              |top             |944    |695     |203     |222     |0       |2       |
+|  u_bcd_handler  |bcd_handler     |12     |6       |6       |0       |0       |1       |
+|  u_beep         |buzzer_driver   |42     |25      |15      |16      |0       |0       |
+|  u_decoder      |key_decoder     |77     |77      |0       |24      |0       |0       |
+|  u_disp         |display_driver  |134    |128     |6       |13      |0       |0       |
+|  u_div          |divclk          |31     |11      |0       |31      |0       |0       |
+|  u_key_driver   |v_ajxd          |47     |23      |0       |47      |0       |0       |
+|  u_leds         |led_driver      |8      |8       |0       |0       |0       |0       |
+|  u_math         |math_alu        |318    |232     |86      |19      |0       |1       |
+|    u_divider    |divider_8bit    |96     |90      |6       |0       |0       |0       |
+|    u_multiplier |multiplier_8bit |0      |0       |0       |0       |0       |1       |
++---------------------------------------------------------------------------------------+
+
+
+DataNet Average Fanout:
+
+   Index     Fanout    Nets  
+    #1         1       561   
+    #2         2       139   
+    #3         3       127   
+    #4         4        37   
+    #5        5-10     112   
+    #6       11-50      26   
+    #7       51-100     2    
+  Average     2.84           

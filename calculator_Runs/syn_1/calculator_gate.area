@@ -1,0 +1,48 @@
+standard
+***Report Model: top Device: EG4S20BG256***
+
+IO Statistics
+#IO                        39
+  #input                   14
+  #output                  25
+  #inout                    0
+
+LUT Statistics
+#Total_luts               997
+  #lut4                   368
+  #lut5                   116
+  #lut6                     0
+  #lut5_mx41                0
+  #lut4_alu1b             513
+
+Utilization Statistics
+#lut                      997   out of  19600    5.09%
+#reg                      205   out of  19600    1.05%
+#le                         0
+#dsp                        2   out of     29    6.90%
+#bram                       0   out of     64    0.00%
+  #bram9k                   0
+  #fifo9k                   0
+#bram32k                    0   out of     16    0.00%
+#pad                       39   out of    188   20.74%
+  #ireg                     4
+  #oreg                    13
+  #treg                     0
+#pll                        0   out of      4    0.00%
+
+Report Hierarchy Area:
++-------------------------------------------------------------------------------+
+|Instance         |Module          |lut     |ripple  |seq     |bram    |dsp     |
++-------------------------------------------------------------------------------+
+|top              |top             |484     |513     |222     |0       |2       |
+|  u_bcd_handler  |bcd_handler     |0       |11      |0       |0       |1       |
+|  u_beep         |buzzer_driver   |3       |37      |18      |0       |0       |
+|  u_decoder      |key_decoder     |91      |0       |21      |0       |0       |
+|  u_disp         |display_driver  |119     |0       |10      |0       |0       |
+|  u_div          |divclk          |11      |0       |33      |0       |0       |
+|  u_key_driver   |v_ajxd          |16      |0       |48      |0       |0       |
+|  u_leds         |led_driver      |8       |0       |0       |0       |0       |
+|  u_math         |math_alu        |146     |201     |19      |0       |1       |
+|    u_divider    |divider_8bit    |84      |11      |0       |0       |0       |
+|    u_multiplier |multiplier_8bit |0       |0       |0       |0       |1       |
++-------------------------------------------------------------------------------+

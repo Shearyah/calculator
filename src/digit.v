@@ -5,7 +5,7 @@
  * 显示格式：十进制，负号显示在最高位
  * 显示范围：-999到+9999，超出范围显示为----?
  */
-module display_driver(
+module digit_tube(
     input clk,
     input [15:0] data_in, // 显示数据
     output reg [7:0] seg,//段选
@@ -14,16 +14,14 @@ module display_driver(
     //符号处理
     wire is_neg = data_in[15]; //< 是否是负数
     wire [15:0] abs_data = is_neg ? (~data_in + 1) : data_in; //< 输入数据的绝对值
-    reg [15:0] scan_cnt; //< 扫描计数器
+    reg [1:0] scan_cnt; //< 扫描计数器
     reg [3:0] d0, d1, d2, d3; //< 四个数字的bcd
     reg [3:0] disp_digit; //< 当前状态值
 
     // 扫描计数器和片选信号
     always @(posedge clk) scan_cnt <= scan_cnt + 1;
-    wire [1:0] scan_sel = scan_cnt[15:14];
 
     // 移位加三法，对每一个输出数字进行bcd编码
-    
     reg [3:0] i;
     always @(abs_data) begin
         {d3, d2, d1, d0} = 0;
@@ -41,7 +39,7 @@ module display_driver(
 
     // 位选扫描逻辑 (低电平选中位)
     always @(*) begin
-        case(scan_sel)
+        case(scan_cnt)
             2'b00: begin an = 4'b1110; disp_digit = d0; end
             2'b01: begin an = 4'b1101; disp_digit = d1; end
             2'b10: begin an = 4'b1011; disp_digit = d2; end
@@ -52,10 +50,10 @@ module display_driver(
             end
         endcase
         // 范围检测，超出范围显示----
-        // if ((is_neg && (abs_data > 16'd999)) || (!is_neg && (abs_data > 16'd9999))) begin
-        //     an = 4'b0000; //全部灭
-        //     disp_digit = 4'h10; //特殊码，显示----
-        // end
+        //if ((is_neg && (abs_data > 16'd999)) || (!is_neg && (abs_data > 16'd9999))) begin
+        //    an = 4'b0000; //全部灭
+        //    disp_digit = 4'h10; //特殊码，显示----
+        //end
     end
 
     //bcd解码，AH

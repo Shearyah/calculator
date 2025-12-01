@@ -1,26 +1,19 @@
-// LED驱动模块
-// TODO: 去除 current_state 输入，直接用 data_saved 判定是否点亮LED
-module led_driver(
-    input clk,
-    input rst_n, //复位信号，低有效
-    input [2:0] current_state,  //获取主状态
-    input [7:0] data_saved,    
-    output reg [7:0] led       
+// LED显示模块
+// 功能是每个时钟周期只显示一个LED灯，通过快速切换实现多灯同时点亮的效果
+// 省电
+// 其他方面与直接用组合逻辑输出并无不同
+module led(
+    input clk, // 时钟
+    input [7:0] data, // 输入数据
+    output [7:0] led // LED显示
 );
-    //状态常量
-    localparam S_INPUT_A = 0;
-    localparam S_INPUT_B = 1;
-    localparam S_RESULT  = 2;
 
-    always @(posedge clk or negedge rst_n) begin
-        if(!rst_n) begin
-            led <= 8'h00;
-        end else begin
-            if(current_state == S_INPUT_B || current_state == S_RESULT) begin
-                led <= data_saved;  //合适状态点灯，不合适状态熄灯
-            end else begin
-                led <= 8'h00;
-            end
-        end
-    end
+reg [2:0] scan_cnt; // 扫描计数器
+
+assign led = data & (8'b00000001 << scan_cnt); // 逐位点亮
+
+always @(posedge clk) begin
+    scan_cnt <= scan_cnt + 1;
+end
+
 endmodule

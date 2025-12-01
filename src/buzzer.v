@@ -1,56 +1,50 @@
 // 蜂鸣器驱动
-// TODO: 将 key_status 与频率的映射与频率驱动蜂鸣器分离为两个模块
-
-module buzzer_driver(
-    input clk,
-    input [15:0] key_status, // New: 16位按键状态，用于确定发声频率
-    output reg beep
+// 使用PWM驱动
+module buzzer(
+    input clk, // 时钟, 约为 20ns, 可用来调整全局音调
+    input [3:0] idx, // 周期序号
+    input en, // 使能, 高有效
+    output beep
 );
-    reg [31:0] period;
-    reg [31:0] cnt;
-    
-    // 判断是否有按键正在按下
-    wire key_is_pressed = |key_status;
+    reg [31:0] period; // PWM周期
+    reg [31:0] duty; // PWM占空比
 
-    // 频率查找表 (根据按下的键来确定发声频率)
+    pwm_32u pwm(
+        .clk(clk),
+        .rst_n(1'b1),
+        .duty(duty),
+        .period(period),
+        .pwm(beep)
+    );
+
     always @(*) begin
-        // 这里需要找到 key_status 中哪一位是 1，才能确定 period
-        casez(key_status)
-            16'h8000: period = 95602; // Key 15
-            16'h4000: period = 85178; // Key 14
-            16'h2000: period = 75872; // Key 13
-            16'h1000: period = 71633; // Key 12
-            
-            16'h0800: period = 63775; // Key 11
-            16'h0400: period = 56818; // Key 10
-            16'h0200: period = 50607; // Key 9
-            16'h0100: period = 47801; // Key 8
-            
-            16'h0080: period = 42589; // Key 7
-            16'h0040: period = 37937; // Key 6
-            16'h0020: period = 35816; // Key 5
-            16'h0010: period = 31887; // Key 4
-            
-            16'h0008: period = 28409; // Key 3
-            16'h0004: period = 25303; // Key 2
-            16'h0002: period = 23900; // Key 1
-            16'h0001: period = 21294; // Key 0
-            default: period = 0;
-        endcase
-    end
-
-    // 震荡逻辑：只要按键按下，就一直发声
-    always @(posedge clk) begin
-        if(key_is_pressed && period != 0) begin
-            if(cnt < period) begin
-                cnt <= cnt + 1;
-            end else begin
-                cnt <= 0;
-                beep <= ~beep; // 翻转发声
-            end
+        if (!en) begin
+            period = 32'd0; // 不工作时输出高电平
+            duty = 32'd0;
         end else begin
-            beep <= 0;
-            cnt <= 0;
+            case (idx)
+                4'd0: period = 32'd95602;
+                4'd1: period = 32'd85178; 
+                4'd2: period = 32'd75872; 
+                4'd3: period = 32'd71633; 
+
+                4'd4: period = 32'd63775; 
+                4'd5: period = 32'd56818; 
+                4'd6: period = 32'd50607; 
+                4'd7: period = 32'd47801; 
+
+                4'd8: period = 32'd42589;  
+                4'd9: period = 32'd37931;  
+                4'd10: period = 32'd35816; 
+                4'd11: period = 32'd31887;
+
+                4'd12: period = 32'd28409; 
+                4'd13: period = 32'd25303; 
+                4'd14: period = 32'd23900; 
+                4'd15: period = 32'd21294; 
+                default: ; // 不可能发生 
+            endcase
+            duty = period >> 1; // 占空比50%
         end
     end
 endmodule
